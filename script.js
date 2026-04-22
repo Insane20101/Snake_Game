@@ -136,6 +136,29 @@ document.addEventListener('keydown', (e)=>{ // keydown event is fired when a key
 });
 
 
+let touchStartX = 0;
+let touchStartY = 0;
+
+document.addEventListener("touchstart", (e) => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+});
+
+document.addEventListener("touchend", (e) => {
+    let touchEndX = e.changedTouches[0].clientX;
+    let touchEndY = e.changedTouches[0].clientY;
+
+    let dx = touchEndX - touchStartX;
+    let dy = touchEndY - touchStartY;
+
+    if (Math.abs(dx) > Math.abs(dy)) {
+        if (dx > 0 && direction !== "left") direction = "right";
+        else if (dx < 0 && direction !== "right") direction = "left";
+    } else {
+        if (dy > 0 && direction !== "up") direction = "down";
+        else if (dy < 0 && direction !== "down") direction = "up";
+    }
+});
 
 
 function render(){
@@ -204,6 +227,9 @@ function render(){
     })
 }
 render();
+
+
+
 
 
 
